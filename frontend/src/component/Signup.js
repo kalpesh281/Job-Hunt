@@ -334,6 +334,7 @@ const Signup = (props) => {
           >
             <MenuItem value="applicant">Applicant</MenuItem>
             <MenuItem value="recruiter">Recruiter</MenuItem>
+              <MenuItem value="admin">Admin</MenuItem>
           </TextField>
         </Grid>
         <Grid item>
@@ -434,7 +435,7 @@ const Signup = (props) => {
               />
             </Grid>
           </>
-        ) : (
+          ) : signupDetails.type === "recruiter"? (
           <>
             <Grid item style={{ width: "100%" }}>
               <TextField
@@ -463,7 +464,7 @@ const Signup = (props) => {
               />
             </Grid>
           </>
-        )}
+        ):null}
 
         <Grid item>
           <Button
