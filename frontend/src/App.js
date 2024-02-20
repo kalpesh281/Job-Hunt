@@ -17,6 +17,8 @@ import AcceptedApplicants from "./component/recruiter/AcceptedApplicants";
 import RecruiterProfile from "./component/recruiter/Profile";
 import MessagePopup from "./lib/MessagePopup";
 import { userType } from "./lib/isAuth";
+import Applicant from "./Permission/Applicant";
+import Recruiter from "./Permission/Recruiter";
 
 const useStyles = makeStyles(
   (theme) => ({
@@ -71,6 +73,12 @@ function App() {
               </Route>
               <Route exact path="/applications">
                 <Applications />
+              </Route>
+              <Route exact path="/Arecruiter">
+                <Recruiter />
+              </Route>
+              <Route exact path="/Aapplicant">
+                <Applicant />
               </Route>
 
               <Route exact path="/profile">
