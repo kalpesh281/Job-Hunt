@@ -56,7 +56,22 @@ const Navbar = (props) => {
                   <Typography style={{ fontSize: "18px" }}>Logout</Typography>
                 </Button>
               </>
-            ) : (
+            ) : userType() === "admin" ? (<>
+              <Button color="inherit" onClick={() => handleClick("/Aapplicant")}>
+                <Typography style={{ fontSize: "18px" }}>Applicant</Typography>
+              </Button>
+              <Button
+                color="inherit"
+                onClick={() => handleClick("/Arecruiter")}
+              >
+                <Typography style={{ fontSize: "18px" }}>Recruiter</Typography>
+              </Button>
+
+              <Button color="inherit" onClick={() => handleClick("/logout")}>
+                <Typography style={{ fontSize: "18px" }}>Logout</Typography>
+              </Button>
+
+            </>) : (
               <>
                 <Button color="inherit" onClick={() => handleClick("/home")}>
                   <Typography style={{ fontSize: "18px" }}>Home</Typography>
@@ -70,9 +85,9 @@ const Navbar = (props) => {
                 <Button color="inherit" onClick={() => handleClick("/profile")}>
                   <Typography style={{ fontSize: "18px" }}>Profile</Typography>
                 </Button>
-                {/* <Button color="inherit" onClick={() => handleClick("/logout")}>
+                <Button color="inherit" onClick={() => handleClick("/logout")}>
                   <Typography style={{ fontSize: "18px" }}>Logout</Typography>
-                </Button> */}
+                </Button>
               </>
             )
           ) : (

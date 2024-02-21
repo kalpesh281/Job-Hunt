@@ -311,6 +311,68 @@ const Signup = (props) => {
     }
   };
 
+
+  const handleLoginAdmin = () => {
+    const tmpErrorHandler = {};
+    Object.keys(inputErrorHandler).forEach((obj) => {
+      if (inputErrorHandler[obj].required && inputErrorHandler[obj].untouched) {
+        tmpErrorHandler[obj] = {
+          required: true,
+          untouched: false,
+          error: true,
+          message: `${obj[0].toUpperCase() + obj.substr(1)} is required`,
+        };
+      } else {
+        tmpErrorHandler[obj] = inputErrorHandler[obj];
+      }
+    });
+
+    let updatedDetails = {
+      ...signupDetails,
+      // Add any additional admin-specific details if needed
+    };
+
+    setSignupDetails(updatedDetails);
+
+    const verified = !Object.keys(tmpErrorHandler).some((obj) => {
+      return tmpErrorHandler[obj].error;
+    });
+
+    console.log(updatedDetails);
+
+    if (verified) {
+      axios
+        .post(apiList.signup, updatedDetails)
+        .then((response) => {
+          localStorage.setItem("token", response.data.token);
+          localStorage.setItem("type", response.data.type);
+          setLoggedin(isAuth());
+          setPopup({
+            open: true,
+            severity: "success",
+            message: "Logged in successfully",
+          });
+          console.log(response);
+        })
+        .catch((err) => {
+          setPopup({
+            open: true,
+            severity: "error",
+            message: err.response.data.message,
+          });
+          console.log(err.response);
+        });
+    } else {
+      setInputErrorHandler(tmpErrorHandler);
+      setPopup({
+        open: true,
+        severity: "error",
+        message: "Incorrect Input",
+      });
+    }
+  };
+
+
   return loggedin ? (
     <Redirect to="/" />
   ) : (
@@ -472,8 +534,8 @@ const Signup = (props) => {
             color="primary"
             onClick={() => {
               signupDetails.type === "applicant"
-                ? handleLogin()
-                : handleLoginRecruiter();
+                ? handleLogin() : signupDetails.type==="recruiter"
+                  ? handleLoginRecruiter() : handleLoginAdmin()
             }}
             className={classes.submitButton}
             style={{ borderRadius: "8px", width: "130px", height: "50px" }}
