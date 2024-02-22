@@ -34,8 +34,10 @@ const useStyles = makeStyles((theme) => ({
     height: "inherit",
   },
   button: {
-    width: "100%",
-    height: "100%",
+    margin: "100px",
+    padding: "25px 60px",
+    width: "20px",
+    height: "20px",
   },
   jobTileOuter: {
     padding: "30px",
@@ -105,7 +107,10 @@ const JobTile = (props) => {
       <Grid container>
         <Grid container item xs={9} spacing={1} direction="column">
           <Grid item>
-            <Typography variant="h5">{job.title}</Typography>
+            <Typography variant="h4">{job.title}</Typography>
+          </Grid>
+          <Grid item>
+            <Typography variant="h6">Company:{job.companyName}</Typography>
           </Grid>
           <Grid item>
             <Rating value={job.rating !== -1 ? job.rating : null} readOnly />
@@ -120,10 +125,12 @@ const JobTile = (props) => {
           <Grid item>Application Deadline : {deadline}</Grid>
 
           <Grid item>
+            Skills Required:
             {job.skillsets.map((skill) => (
               <Chip label={skill} style={{ marginRight: "2px" }} />
             ))}
           </Grid>
+          <Grid item>Job Responsibilities : {job.responsibility}</Grid>
         </Grid>
         <Grid item xs={3}>
           <Button
@@ -152,7 +159,7 @@ const JobTile = (props) => {
           }}
         >
           <TextField
-            label="Write SOP (upto 250 words)"
+            label="Write Cover Letter (upto 250 words)"
             multiline
             rows={8}
             style={{ width: "100%", marginBottom: "30px" }}

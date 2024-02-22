@@ -10,6 +10,14 @@ let schema = new mongoose.Schema(
       type: String,
       required: true,
     },
+     companyName: {
+      type: String, // Adding companyName field
+      required: true,
+    },
+    responsibility: {
+      type: String, // Adding responsibility field
+      required: true,
+    },
     maxApplicants: {
       type: Number,
       validate: [

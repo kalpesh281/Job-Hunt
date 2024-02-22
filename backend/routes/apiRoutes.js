@@ -40,12 +40,15 @@ router.post("/jobs", jwtAuth, (req, res) => {
     duration: data.duration,
     salary: data.salary,
     rating: data.rating,
+    companyName: data.companyName,
+    responsibility: data.responsibility,
   });
 
   job
     .save()
     .then(() => {
       res.json({ message: "Job added successfully to the database" });
+      console.log(job)
     })
     .catch((err) => {
       //Whenever any user sends an invalid request to the server, 
@@ -604,7 +607,7 @@ router.get("/jobs/:id/applications", jwtAuth, (req, res) => {
   }
   const jobId = req.params.id;
 
-  
+
 
   let findParams = {
     jobId: jobId,

@@ -56,4 +56,4 @@ let schema = new mongoose.Schema(
   { collation: { locale: "en" } }
 );
 
-module.exports = mongoose.model("applications", schema);
+module.exports = mongoose.model("applications", schema); 

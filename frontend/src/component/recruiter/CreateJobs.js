@@ -44,6 +44,8 @@ const CreateJobs = (props) => {
     jobType: "Full Time",
     duration: 0,
     salary: 0,
+    companyName: "",
+    responsibility: ""
   });
 
   const handleInput = (key, value) => {
@@ -78,6 +80,8 @@ const CreateJobs = (props) => {
           jobType: "Full Time",
           duration: 0,
           salary: 0,
+          companyName: "",
+          responsibility: "",
         });
       })
       .catch((err) => {
@@ -100,7 +104,12 @@ const CreateJobs = (props) => {
         style={{ padding: "30px", minHeight: "93vh", width: "50%" }}
       >
         <Grid item>
-          <Typography variant="h2" style={{ color: "white", fontWeight: "bold" }}>Add Job</Typography>
+          <Typography
+            variant="h2"
+            style={{ color: "white", fontWeight: "bold" }}
+          >
+            Add Job
+          </Typography>
         </Grid>
         <Grid item container xs direction="column" justify="center">
           <Grid item>
@@ -129,6 +138,31 @@ const CreateJobs = (props) => {
                     }
                     variant="outlined"
                     fullWidth
+                  />
+                </Grid>
+                <Grid item>
+                  <TextField
+                    label="Company Name"
+                    value={jobDetails.companyName}
+                    onChange={(event) =>
+                      handleInput("companyName", event.target.value)
+                    }
+                    variant="outlined"
+                    fullWidth
+                  />
+                </Grid>
+                {/* Add responsibility input */}
+                <Grid item>
+                  <TextField
+                    label="Responsibility"
+                    value={jobDetails.responsibility}
+                    onChange={(event) =>
+                      handleInput("responsibility", event.target.value)
+                    }
+                    variant="outlined"
+                    fullWidth
+                    multiline
+                    rows={4}
                   />
                 </Grid>
                 <Grid item>
