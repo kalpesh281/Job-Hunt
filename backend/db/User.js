@@ -19,6 +19,11 @@ let schema = new mongoose.Schema(
       enum: ["recruiter", "applicant", "admin"],
       required: true,
     },
+    status:{
+      type:String,
+      enum: ["unverified", "accepted", "rejected"],
+      default:false,
+    }
     
   },
   { collation: { locale: "en" } }

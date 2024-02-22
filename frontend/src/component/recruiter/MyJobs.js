@@ -68,8 +68,11 @@ const JobTile = (props) => {
   const [open, setOpen] = useState(false);
   const [openUpdate, setOpenUpdate] = useState(false);
   const [jobDetails, setJobDetails] = useState(job);
+  // const [companyName, setCompanyName] = useState("");
 
   console.log(jobDetails);
+
+
 
   const handleInput = (key, value) => {
     setJobDetails({
@@ -155,6 +158,11 @@ const JobTile = (props) => {
             <Typography variant="h5">{job.title}</Typography>
           </Grid>
           <Grid item>
+            <Typography variant="subtitle1">
+              Company: {job.companyName}
+            </Typography>
+          </Grid>
+          <Grid item>
             <Rating value={job.rating !== -1 ? job.rating : null} readOnly />
           </Grid>
           <Grid item>Role : {job.jobType}</Grid>
@@ -170,10 +178,13 @@ const JobTile = (props) => {
             {job.maxPositions - job.acceptedCandidates}
           </Grid>
           <Grid item>
+            {" "}
+            Skills Required:
             {job.skillsets.map((skill) => (
               <Chip label={skill} style={{ marginRight: "2px" }} />
             ))}
           </Grid>
+          <Grid item>Job Responsibility: {job.responsibility}</Grid>
         </Grid>
         <Grid item container direction="column" xs={3}>
           <Grid item xs>
