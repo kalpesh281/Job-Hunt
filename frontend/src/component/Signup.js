@@ -396,12 +396,17 @@ const Signup = (props) => {
           >
             <MenuItem value="applicant">Applicant</MenuItem>
             <MenuItem value="recruiter">Recruiter</MenuItem>
-              <MenuItem value="admin">Admin</MenuItem>
+            <MenuItem value="admin">Admin</MenuItem>
           </TextField>
         </Grid>
         <Grid item>
           <TextField
-            label="Name"
+            label={
+              <>
+                Name<span style={{ color: 'red' }}>*</span>
+              </>
+            }
+
             value={signupDetails.name}
             onChange={(event) => handleInput("name", event.target.value)}
             className={classes.inputBox}
@@ -419,7 +424,11 @@ const Signup = (props) => {
         </Grid>
         <Grid item>
           <EmailInput
-            label="Email"
+            label={
+              <>
+                Email<span style={{ color: 'red' }}>*</span>
+              </>
+            }
             value={signupDetails.email}
             onChange={(event) => handleInput("email", event.target.value)}
             inputErrorHandler={inputErrorHandler}
@@ -430,7 +439,11 @@ const Signup = (props) => {
         </Grid>
         <Grid item>
           <PasswordInput
-            label="Password"
+            label={
+              <>
+                Password<span style={{ color: 'red' }}>*</span>
+              </>
+            }
             value={signupDetails.password}
             onChange={(event) => handleInput("password", event.target.value)}
             className={classes.inputBox}
@@ -497,7 +510,7 @@ const Signup = (props) => {
               />
             </Grid>
           </>
-          ) : signupDetails.type === "recruiter"? (
+        ) : signupDetails.type === "recruiter" ? (
           <>
             <Grid item style={{ width: "100%" }}>
               <TextField
@@ -526,7 +539,7 @@ const Signup = (props) => {
               />
             </Grid>
           </>
-        ):null}
+        ) : null}
 
         <Grid item>
           <Button
@@ -534,7 +547,7 @@ const Signup = (props) => {
             color="primary"
             onClick={() => {
               signupDetails.type === "applicant"
-                ? handleLogin() : signupDetails.type==="recruiter"
+                ? handleLogin() : signupDetails.type === "recruiter"
                   ? handleLoginRecruiter() : handleLoginAdmin()
             }}
             className={classes.submitButton}

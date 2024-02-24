@@ -13,6 +13,10 @@ const apiList = {
   applicants: `${server}/api/applicants`,
   adminLogin: `${server}/auth/admin/login`, 
   adminSignup: `${server}/auth/admin/signup`,
+  verify: `${server}/api/verify`,
+  getRecruiter: `${server}/api/getRecruiters`,
+  status: `${server}/api/recruiter/status`
+
 };
 
 export default apiList;
