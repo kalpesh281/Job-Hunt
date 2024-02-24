@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   AppBar, Toolbar, Typography, Button, makeStyles,
 } from "@material-ui/core";
@@ -21,11 +22,26 @@ const Navbar = (props) => {
   const classes = useStyles();
   let history = useHistory();
 
+  const [status, setstatus] = useState(
+    localStorage.getItem("status") || "unverified"
+  );
+
+
+
+
+  const [popup, setPopup] = useState({
+    open: false,
+    severity: "",
+    message: "",
+  });
+
+  const type = localStorage.getItem("type");
+
+ 
+
   const handleClick = (location) => {
-    console.log(location);
     history.push(location);
   };
-
 
   return (
     <AppBar position="fixed" background="transparent">
@@ -35,43 +51,53 @@ const Navbar = (props) => {
         <div style={{ marginTop: "20px" }}>
           {isAuth() ? (
             userType() === "recruiter" ? (
-              <>
 
-                <Button color="inherit" onClick={() => handleClick("/home")}>
-                  <Typography style={{ fontSize: "18px" }}>Home</Typography>
+              <>
+                {status ==="approved" ?(
+                  <>
+                    <Button color="inherit" onClick={() => handleClick("/home")}>
+                      <Typography style={{ fontSize: "18px" }}>Home</Typography>
+                    </Button>
+                    <Button color="inherit" onClick={() => handleClick("/addjob")}>
+                      <Typography style={{ fontSize: "18px" }}>Add Jobs</Typography>
+                    </Button>
+                    <Button color="inherit" onClick={() => handleClick("/myjobs")}>
+                      <Typography style={{ fontSize: "18px" }}>Posted</Typography>
+                    </Button>
+                    <Button color="inherit" onClick={() => handleClick("/employees")}>
+                      <Typography style={{ fontSize: "18px" }}>Employees</Typography>
+                    </Button>
+                    <Button color="inherit" onClick={() => handleClick("/profile")}>
+                      <Typography style={{ fontSize: "18px" }}>Profile</Typography>
+                    </Button>
+                    <Button color="inherit" onClick={() => handleClick("/logout")}>
+                      <Typography style={{ fontSize: "18px" }}>Logout</Typography>
+                    </Button>
+                  </>
+                ) : (<Button color="inherit" onClick={() => handleClick("/logout")}>
+                  <Typography style={{ fontSize: "18px" }}>Logout</Typography>
+                </Button>)}
+              
+                
+              </>
+
+            ) : userType() === "admin" ? (
+              <>
+                <Button color="inherit" onClick={() => handleClick("/Aapplicant")}>
+                  <Typography style={{ fontSize: "18px" }}>Applicant</Typography>
                 </Button>
-                <Button color="inherit" onClick={() => handleClick("/addjob")}>
-                  <Typography style={{ fontSize: "18px" }}>Add Jobs</Typography>
-                </Button>
-                <Button color="inherit" onClick={() => handleClick("/myjobs")}>
-                  <Typography style={{ fontSize: "18px" }}>Posted</Typography>
-                </Button>
-                <Button color="inherit" onClick={() => handleClick("/employees")}>
-                  <Typography style={{ fontSize: "18px" }}>Employees</Typography>
-                </Button>
-                <Button color="inherit" onClick={() => handleClick("/profile")}>
-                  <Typography style={{ fontSize: "18px" }}>Profile</Typography>
+                <Button
+                  color="inherit"
+                  onClick={() => handleClick("/recruiters")}
+                >
+                  <Typography style={{ fontSize: "18px" }}>Recruiter</Typography>
                 </Button>
                 <Button color="inherit" onClick={() => handleClick("/logout")}>
                   <Typography style={{ fontSize: "18px" }}>Logout</Typography>
                 </Button>
               </>
-            ) : userType() === "admin" ? (<>
-              <Button color="inherit" onClick={() => handleClick("/Aapplicant")}>
-                <Typography style={{ fontSize: "18px" }}>Applicant</Typography>
-              </Button>
-              <Button
-                color="inherit"
-                onClick={() => handleClick("/Arecruiter")}
-              >
-                <Typography style={{ fontSize: "18px" }}>Recruiter</Typography>
-              </Button>
-
-              <Button color="inherit" onClick={() => handleClick("/logout")}>
-                <Typography style={{ fontSize: "18px" }}>Logout</Typography>
-              </Button>
-
-            </>) : (
+            ) : (
+              
               <>
                 <Button color="inherit" onClick={() => handleClick("/home")}>
                   <Typography style={{ fontSize: "18px" }}>Home</Typography>
@@ -91,6 +117,7 @@ const Navbar = (props) => {
               </>
             )
           ) : (
+          
             <>
               <Button color="inherit" onClick={() => handleClick("/login")}>
                 <Typography style={{ fontSize: "18px" }}>Login</Typography>

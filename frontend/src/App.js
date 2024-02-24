@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { Grid, makeStyles } from "@material-ui/core";
 
@@ -17,38 +17,85 @@ import AcceptedApplicants from "./component/recruiter/AcceptedApplicants";
 import RecruiterProfile from "./component/recruiter/Profile";
 import MessagePopup from "./lib/MessagePopup";
 import { userType } from "./lib/isAuth";
-import Applicant from "./Permission/Applicant";
-import Recruiter from "./Permission/Recruiter";
+import Recruiters from "./Permission/Recruiter";
+import apiList from "./lib/apiList";
 
-const useStyles = makeStyles(
-  (theme) => ({
-    body: {
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "center",
-      alignItems: "center",
-      minHeight: "98vh",
-      paddingTop: "64px",
-      boxSizing: "border-box",
-      width: "100%",
-    },
-  }));
+const useStyles = makeStyles((theme) => ({
+  body: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    minHeight: "98vh",
+    paddingTop: "64px",
+    boxSizing: "border-box",
+    width: "100%",
+  },
+}));
 
 export const SetPopupContext = createContext();
 
-
 function App() {
   const classes = useStyles();
+  const [status, setstatus] = useState(
+    localStorage.getItem("status") || "unverified"
+  );
   const [popup, setPopup] = useState({
     open: false,
     severity: "",
     message: "",
   });
 
+  const type = localStorage.getItem("type");
+
+  useEffect(() => {
+    if (type === "recruiter") {
+      fetch(apiList.status, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          localStorage.setItem("status", data.status);
+          setstatus(data.status);
+        });
+    }
+  }, []);
+
   return (
     <BrowserRouter>
-
       <SetPopupContext.Provider value={setPopup}>
+        {type === "recruiter" ? (
+          <>
+            {status === "unverified" ? (
+              <h1
+                style={{
+                  position: "fixed",
+                  top: "0px",
+                  left: "0px",
+                  background: "#3f51b5",
+                  zIndex: "9999",
+                }}
+              >
+                Please wait for Admin's Approval{" "}
+              </h1>
+            ) : null}
+            {status === "rejected" ? (
+              <h1
+                style={{
+                  position: "fixed",
+                  top: "0px",
+                  left: "0px",
+                  background: "#3f51b5",
+                  zIndex: "9999",
+                }}
+              >
+                You  Have Been Rejected From Admin
+              </h1>
+            ) : null}
+          </>
+        ) : null}
 
         <Grid container direction="column">
           <Grid item xs>
@@ -74,12 +121,6 @@ function App() {
               <Route exact path="/applications">
                 <Applications />
               </Route>
-              <Route exact path="/Arecruiter">
-                <Recruiter />
-              </Route>
-              <Route exact path="/Aapplicant">
-                <Applicant />
-              </Route>
 
               <Route exact path="/profile">
                 {userType() === "recruiter" ? (
@@ -99,6 +140,9 @@ function App() {
               </Route>
               <Route exact path="/employees">
                 <AcceptedApplicants />
+              </Route>
+              <Route exact path="/recruiters">
+                <Recruiters />
               </Route>
               <Route>
                 <ErrorPage />

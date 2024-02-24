@@ -1353,4 +1353,21 @@ router.get("/rating", jwtAuth, (req, res) => {
 });
 
 
+
+router.post("/verify", jwtAuth, async (req, res) => {
+  let { id, status } = req.body;
+  await User.findOneAndUpdate({ _id: id }, { status: status });
+  res.json({ id, status });
+});
+
+router.get("/getRecruiters", jwtAuth, async (req, res) => {
+  let recruiters = await User.find({ type: "recruiter" });
+  res.json(recruiters);
+});
+
+router.get("/recruiter/status", jwtAuth, async (req, res) => {
+  res.json({ status: req.user.status });
+});
+
+
 module.exports = router;
