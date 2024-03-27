@@ -15,7 +15,9 @@ const apiList = {
   adminSignup: `${server}/auth/admin/signup`,
   verify: `${server}/api/verify`,
   getRecruiter: `${server}/api/getRecruiters`,
-  status: `${server}/api/recruiter/status`
+  status: `${server}/api/recruiter/status`,
+  resetPass: `${server}/auth/reset-password`
+
 
 };
 
