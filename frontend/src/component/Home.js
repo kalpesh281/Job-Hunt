@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState, useEffect, useContext } from "react";
 import {
   Button,
@@ -55,11 +56,21 @@ const useStyles = makeStyles((theme) => ({
 
 const JobTile = (props) => {
   const classes = useStyles();
-  const { job } = props;
+  const { job, userId } = props;
   const setPopup = useContext(SetPopupContext);
 
   const [open, setOpen] = useState(false);
   const [sop, setSop] = useState("");
+  const [applied, setApplied] = useState(false);
+
+
+  useEffect(() => {
+    // Check local storage if job is applied when component mounts
+    const appliedJobs = JSON.parse(localStorage.getItem("appliedJobs")) || [];
+    if (appliedJobs.includes(job._id)) {
+      setApplied(true);
+    }
+  }, [job._id, userId]);
 
   const handleClose = () => {
     setOpen(false);
@@ -88,6 +99,10 @@ const JobTile = (props) => {
           message: response.data.message,
         });
         handleClose();
+        setApplied(true);
+        // Save applied job in local storage
+        const appliedJobs = JSON.parse(localStorage.getItem(`appliedJobs_${userId}`)) || [];
+        localStorage.setItem(`appliedJobs_${userId}`, JSON.stringify([...appliedJobs, job._id]));
       })
       .catch((err) => {
         console.log(err.response);
@@ -140,9 +155,9 @@ const JobTile = (props) => {
             onClick={() => {
               setOpen(true);
             }}
-            disabled={userType() === "recruiter"}
+            disabled={userType() === "recruiter" || applied}
           >
-            Apply
+            {applied ? "Applied" : "Apply"}
           </Button>
         </Grid>
       </Grid>
@@ -168,7 +183,7 @@ const JobTile = (props) => {
             onChange={(event) => {
               if (
                 event.target.value.split(" ").filter(function (n) {
-                  return n != "";
+                  return n !== "";
                 }).length <= 250
               ) {
                 setSop(event.target.value);
@@ -567,19 +582,19 @@ const Home = (props) => {
     if (searchOptions.jobType.wfh) {
       searchParams = [...searchParams, `jobType=Work%20From%20Home`];
     }
-    if (searchOptions.salary[0] != 0) {
+    if (searchOptions.salary[0] !== 0) {
       searchParams = [
         ...searchParams,
         `salaryMin=${searchOptions.salary[0] * 1000}`,
       ];
     }
-    if (searchOptions.salary[1] != 100) {
+    if (searchOptions.salary[1] !== 100) {
       searchParams = [
         ...searchParams,
         `salaryMax=${searchOptions.salary[1] * 1000}`,
       ];
     }
-    if (searchOptions.duration != "0") {
+    if (searchOptions.duration !== "0") {
       searchParams = [...searchParams, `duration=${searchOptions.duration}`];
     }
 

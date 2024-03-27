@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import {
   AppBar, Toolbar, Typography, Button, makeStyles,
@@ -37,7 +38,7 @@ const Navbar = (props) => {
 
   const type = localStorage.getItem("type");
 
- 
+
 
   const handleClick = (location) => {
     history.push(location);
@@ -53,20 +54,20 @@ const Navbar = (props) => {
             userType() === "recruiter" ? (
 
               <>
-                {status ==="approved" ?(
+                {status === "approved" ? (
                   <>
-                    <Button color="inherit" onClick={() => handleClick("/home")}>
+                    {/* <Button color="inherit" onClick={() => handleClick("/home")}>
                       <Typography style={{ fontSize: "18px" }}>Home</Typography>
-                    </Button>
+                    </Button> */}
                     <Button color="inherit" onClick={() => handleClick("/addjob")}>
                       <Typography style={{ fontSize: "18px" }}>Add Jobs</Typography>
                     </Button>
                     <Button color="inherit" onClick={() => handleClick("/myjobs")}>
                       <Typography style={{ fontSize: "18px" }}>Posted</Typography>
                     </Button>
-                    <Button color="inherit" onClick={() => handleClick("/employees")}>
+                    {/* <Button color="inherit" onClick={() => handleClick("/employees")}>
                       <Typography style={{ fontSize: "18px" }}>Employees</Typography>
-                    </Button>
+                    </Button> */}
                     <Button color="inherit" onClick={() => handleClick("/profile")}>
                       <Typography style={{ fontSize: "18px" }}>Profile</Typography>
                     </Button>
@@ -77,8 +78,8 @@ const Navbar = (props) => {
                 ) : (<Button color="inherit" onClick={() => handleClick("/logout")}>
                   <Typography style={{ fontSize: "18px" }}>Logout</Typography>
                 </Button>)}
-              
-                
+
+
               </>
 
             ) : userType() === "admin" ? (
@@ -97,7 +98,7 @@ const Navbar = (props) => {
                 </Button>
               </>
             ) : (
-              
+
               <>
                 <Button color="inherit" onClick={() => handleClick("/home")}>
                   <Typography style={{ fontSize: "18px" }}>Home</Typography>
@@ -117,7 +118,7 @@ const Navbar = (props) => {
               </>
             )
           ) : (
-          
+
             <>
               <Button color="inherit" onClick={() => handleClick("/login")}>
                 <Typography style={{ fontSize: "18px" }}>Login</Typography>

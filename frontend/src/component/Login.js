@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import {
   Grid,
-  TextField,
+
   Button,
   Typography,
   makeStyles,
@@ -10,7 +10,7 @@ import {
 import axios from "axios";
 import { Redirect } from "react-router-dom";
 import "../index.css"
-
+import { useHistory } from "react-router-dom";
 import PasswordInput from "../lib/PasswordInput";
 import EmailInput from "../lib/EmailInput";
 import { SetPopupContext } from "../App";
@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 const Login = (props) => {
   const classes = useStyles();
   const setPopup = useContext(SetPopupContext);
-
+  const history = useHistory();
   const [loggedin, setLoggedin] = useState(isAuth());
 
   const [loginDetails, setLoginDetails] = useState({
@@ -69,7 +69,9 @@ const Login = (props) => {
       },
     });
   };
-
+  const handleForgotPasswordClick = () => {
+    history.push("/reset-password");
+  };
   const handleLogin = () => {
     const verified = !Object.keys(inputErrorHandler).some((obj) => {
       return inputErrorHandler[obj].error;
@@ -110,7 +112,7 @@ const Login = (props) => {
   ) : (
     <Grid container direction="row" >
       <div style={{ alignItems: "center", marginLeft: "15%", marginTop: "" }}>
-       
+
       </div>
       <Paper elevation={3} className={classes.body}>
 
@@ -139,7 +141,13 @@ const Login = (props) => {
               onChange={(event) => handleInput("password", event.target.value)}
               className={classes.inputBox}
             />
-          </Grid>
+          </Grid>  <Typography
+              color="primary"
+              onClick={handleForgotPasswordClick}
+              style={{ cursor: "pointer" }}
+            >
+              Forgot Password?
+            </Typography>
           <Grid item>
             <Button
               variant="contained"

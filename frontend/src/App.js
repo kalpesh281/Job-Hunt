@@ -19,6 +19,7 @@ import MessagePopup from "./lib/MessagePopup";
 import { userType } from "./lib/isAuth";
 import Recruiters from "./Permission/Recruiter";
 import apiList from "./lib/apiList";
+import ResetPassword from "./component/ResetPassword";
 
 const useStyles = makeStyles((theme) => ({
   body: {
@@ -114,6 +115,9 @@ function App() {
               </Route>
               <Route exact path="/logout">
                 <Logout />
+              </Route>
+              <Route exact path="/reset-password">
+                <ResetPassword />
               </Route>
               <Route exact path="/home">
                 <Home />
